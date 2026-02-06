@@ -1,6 +1,7 @@
 
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework.filters import OrderingFilter
 
 from api.models import Task
 from api.serializers import TasksSerializer
@@ -10,6 +11,8 @@ from api.serializers import TasksSerializer
 class TasksListView(generics.ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TasksSerializer
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['id', 'title']
 
     def get_queryset(self):
         queryset = Task.objects.all()
